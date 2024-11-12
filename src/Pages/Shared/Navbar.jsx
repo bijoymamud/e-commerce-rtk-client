@@ -1,5 +1,6 @@
 import React from 'react'
 import Container from '../../Layout/Container/Container'
+import { Link } from 'react-router-dom'
 
 const Navbar = () => {
   return (
@@ -7,7 +8,7 @@ const Navbar = () => {
           <Container>
           <div className="navbar bg-base-100">
   <div className="flex-1">
-    <h1 className='text-2xl font-bold cursor-pointer'>E-commerce</h1>
+    <Link to="/" className='text-2xl font-bold cursor-pointer'>E-commerce</Link>
   </div>
   <div className="flex-none">
     <div className="dropdown dropdown-end">

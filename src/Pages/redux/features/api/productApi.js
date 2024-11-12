@@ -1,4 +1,3 @@
-// productApi.js
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const productApi = createApi({
@@ -12,6 +11,7 @@ export const productApi = createApi({
       query: () => "products",
       providesTags: ['products']
     }),
+
     deleteProduct: builder.mutation({
       query: (id) => ({
         url: `products/${id}`,
@@ -19,12 +19,18 @@ export const productApi = createApi({
       }),
       invalidatesTags: ['products']
     }),
-    // addProduct: builder.mutation({
-    //   query: (id) => ({
-    //     url: ``
-    //   })
-    // })
+   
+    addProducts: builder.mutation({
+      query: (newProducts) => ({
+        url: 'products',
+        method: "POST",
+        body: newProducts,
+      }),
+      // invalidatesTags: ["products"]
+    })
+
   }),
 });
 
-export const { useGetProductsQuery, useDeleteProductMutation } = productApi;
+export const { useGetProductsQuery, useDeleteProductMutation, useAddProductsMutation} = productApi;
+
