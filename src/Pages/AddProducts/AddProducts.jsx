@@ -1,10 +1,11 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useAddProductsMutation } from '../redux/features/api/productApi';
+import Container from '../../Layout/Container/Container';
 
 const AddProducts = () => {
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
-  const [addProduct, { isLoading, isError, isSuccess }] = useAddProductsMutation();
+  const [addProduct, { isLoading, isError, isSuccess }, refetch] = useAddProductsMutation();
 
 
 const onSubmit = async (data) => {
@@ -13,16 +14,24 @@ const onSubmit = async (data) => {
     try {
       await addProduct(data);
       reset(); 
-      alert('Product added successfully!');
+      alert('Product Adding! Press ok');
     } catch (error) {
       console.error('Failed to add product:', error);
     }
 
   };
-  
+
 
   return (
-    <div className="max-w-md mx-auto p-4 bg-white shadow-lg rounded-lg">
+    <Container>
+       <section className='md:flex flex-col items-center h-[90vh] justify-center max-w-5xl  md:mx-auto'>
+        <div className=" bg-white  md:flex items-center justify-center gap-5 p-5 w-full mx-auto">
+      <div className='flex mx-auto md:block hidden w-1/2' >
+        <img className='md:w-[300px] w-[200px]'
+          src="https://cdn-icons-png.freepik.com/512/10608/10608872.png" alt="" />
+      </div>
+
+      <div className='w-1/2' >
       <h2 className="text-2xl font-bold mb-6 text-center">Add New Product</h2>
       
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -93,7 +102,10 @@ const onSubmit = async (data) => {
         {isSuccess && <p className="text-green-500">Product added successfully!</p>}
         {isError && <p className="text-red-500">Failed to add product. Please try again.</p>}
       </form>
+      </div>
     </div>
+  </section>
+   </Container>
   );
 };
 

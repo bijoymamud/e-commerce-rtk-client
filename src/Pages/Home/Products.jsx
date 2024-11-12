@@ -21,7 +21,8 @@ const Products = () => {
       const remainingProducts = products.filter(product => product._id !== id);
 
       try {
-        await deleteProduct(id)
+        await deleteProduct(id);
+        refetch()
       } catch (error) {
         alert("Can not delete the product. Try again")
       }
@@ -76,6 +77,7 @@ const Products = () => {
                     <Trash2 size={16} />
                   </button>
 
+                  {/* updateProducts start */}
                   <button
                     className="bg-blue-500 text-white p-1 rounded-full hover:bg-blue-600"
                     onClick={() => navigate(`/edit-product/${product._id}`)}
@@ -84,6 +86,7 @@ const Products = () => {
                   >
                     <Edit size={16} />
                   </button>
+                  
 
                   <button
                     className={`p-1 rounded-full ${
