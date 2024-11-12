@@ -6,63 +6,28 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Trash2, Edit, Heart, HeartOff } from 'lucide-react';
 import { Toaster, toast } from 'react-hot-toast';
 import { useDeleteProductMutation, useGetProductsQuery } from '../redux/features/api/productApi';
-import Swal from 'sweetalert2';
 
 const Products = () => {
   const { data: products, isLoading, isError, error, refetch } = useGetProductsQuery();
   const [deleteProduct] = useDeleteProductMutation();
   const navigate = useNavigate();
   const [favourites, setFavourites] = useState([]);
-  const [deletingProducts, setDeletingProducts] = useState([]);
 
-  const toggleFavourite = (id) => {
-    setFavourites((prev) =>
-      prev.includes(id) ? prev.filter((fav) => fav !== id) : [...prev, id]
-    );
-  };
 
-  const handleDelete = (id) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        setDeletingProducts((prev) => [...prev, id]);
-        deleteProduct(id)
-          .unwrap()
-          .then((res) => {
-            if (res && res.deletedCount > 0) {
-              // Optimistically update the UI
-              const updatedProducts = products.filter(product => product._id !== id);
-              refetch();
-              Swal.fire({
-                title: "Deleted!",
-                text: "Item has been removed from the cart.",
-                icon: "success",
-              });
-            } else {
-              throw new Error('Failed to delete product');
-            }
-          })
-          .catch((err) => {
-            console.error('Delete error:', err);
-            Swal.fire({
-              title: "Error!",
-              text: "Failed to delete the product. Please try again.",
-              icon: "error",
-            });
-          })
-          .finally(() => {
-            setDeletingProducts((prev) => prev.filter(productId => productId !== id));
-          });
+  const handleDelete = async (id) => {
+    console.log(id)
+
+    if (window.confirm("Are you sure to delete the product")) {
+      const remainingProducts = products.filter(product => product._id !== id);
+
+      try {
+        await deleteProduct(id)
+      } catch (error) {
+        alert("Can not delete the product. Try again")
       }
-    });
-  };
+    }
+  }
+
 
   if (isLoading) {
     return <span className="loading loading-bars loading-lg flex items-center justify-center mt-8 mx-auto"></span>;
@@ -105,7 +70,6 @@ const Products = () => {
                   <button
                     className="bg-red-500 text-white p-1 rounded-full hover:bg-red-600 disabled:opacity-50"
                     onClick={() => handleDelete(product._id)}
-                    disabled={deletingProducts.includes(product._id)}
                     title="Delete"
                     aria-label={`Delete ${product.name}`}
                   >
@@ -137,11 +101,7 @@ const Products = () => {
                   <h2 className="card-title">{product.name}</h2>
                   <p>Brand: <span className="font-semibold">{product.brand}</span></p>
                   <p>Price: <span className="font-semibold">${product.price}</span></p>
-                  {/* <Link className="card-actions justify-end mt-5">
-                    <button className="px-3 py-1 border border-amber-600 shadow-md font-semibold rounded-md text-sm text-amber-500">
-                      Add to Cart
-                    </button>
-                  </Link> */}
+                  
                 </div>
               </div>
             ))}
