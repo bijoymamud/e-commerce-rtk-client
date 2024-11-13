@@ -89,7 +89,7 @@ const onSubmit = async (data) => {
           />
           {errors.img && <span className="text-red-500">{errors.img.message}</span>}
         </div>
-       
+      
         <button
           type="submit"
           className="w-full py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
