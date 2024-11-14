@@ -78,14 +78,13 @@ const Products = () => {
                   </button>
 
                   {/* updateProducts start */}
-                  <button
+                  <Link to = {`/edit_product/${product._id}`} 
                     className="bg-blue-500 text-white p-1 rounded-full hover:bg-blue-600"
-                    onClick={() => navigate(`/edit-product/${product._id}`)}
                     title="Edit"
                     aria-label={`Edit ${product.name}`}
                   >
                     <Edit size={16} />
-                  </button>
+                  </Link>
                   
 
                   <button
