@@ -3,6 +3,8 @@ import { useForm } from "react-hook-form";
 import { User, Mail, Lock, MapPin, Phone, ImagePlus } from "lucide-react";
 import { Link } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
+import { useDispatch } from "react-redux";
+import { createUser } from "../redux/features/api/userSlice";
 
 const Registration = () => {
   const {
@@ -10,9 +12,14 @@ const Registration = () => {
     handleSubmit,
     formState: { errors }, reset
   } = useForm();
+  const dispatch = useDispatch()
 
-  const onSubmit = (data) => {
-    console.log("Sign-Up Data", data);
+  const onSubmit = ({ name, email, password }) => {
+    dispatch(createUser({
+      name, email, password
+    }))
+
+    console.log("Sign-Up Data", name, email, password);
     reset()
   };
 
