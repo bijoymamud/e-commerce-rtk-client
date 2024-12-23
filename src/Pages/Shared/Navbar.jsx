@@ -6,7 +6,7 @@ const Navbar = () => {
   return (
     <section className='sticky top-0 z-50 shadow-lg'>
           <Container>
-          <div className="navbar bg-base-100">
+ <div className="navbar bg-base-100">
   <div className="flex-1">
     <Link to="/" className='text-2xl font-bold cursor-pointer'>E-commerce</Link>
   </div>
