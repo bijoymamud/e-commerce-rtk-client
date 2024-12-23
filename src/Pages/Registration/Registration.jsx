@@ -4,7 +4,7 @@ import { User, Mail, Lock, MapPin, Phone, ImagePlus } from "lucide-react";
 import { Link } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { useDispatch } from "react-redux";
-import { createUser } from "../redux/features/api/userSlice";
+import { createUser, googleSignIn } from "../redux/features/api/userSlice";
 
 const Registration = () => {
   const {
@@ -22,6 +22,10 @@ const Registration = () => {
     console.log("Sign-Up Data", name, email, password);
     reset()
   };
+
+  const handleGoogleSignIn = () => {
+    dispatch(googleSignIn())
+  }
 
   return (
     <div className="flex items-center justify-center h-[90.9vh]  bg-gradient-to-br  from-white via-black/[20%] to-gray-300">
@@ -182,7 +186,7 @@ const Registration = () => {
                   </div>
                   
                   <div className="flex items-center gap-5 justify-center">
-                  <FcGoogle className="text-[32px] cursor-pointer"/>
+                  <FcGoogle onClick={handleGoogleSignIn} className="text-[32px] cursor-pointer"/>
                       <span className="cursor-pointer">
                       <img
                     className="w-[36px]"
